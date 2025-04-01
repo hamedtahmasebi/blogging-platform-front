@@ -23,8 +23,10 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm({
+    isLoading = false,
     onSubmit,
 }: {
+    isLoading?: boolean;
     onSubmit: (values: LoginFormValues) => void;
 }) {
     const form = useForm<LoginFormValues>({
@@ -83,7 +85,11 @@ export default function LoginForm({
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="w-full">
+                    <Button
+                        type="submit"
+                        className="w-full"
+                        isLoading={isLoading}
+                    >
                         Sign In
                     </Button>
                     <ContinueWithOptions onGuestLogin={handleGuestLogin} />
