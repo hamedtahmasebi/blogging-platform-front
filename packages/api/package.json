@@ -1,0 +1,40 @@
+{
+    "name": "@workspace/api",
+    "version": "1.0.0",
+    "description": "API client for the blogging platform",
+    "type": "module",
+    "private": true,
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist/**"
+    ],
+    "scripts": {
+        "lint": "eslint . --max-warnings 0",
+        "generate": "tsx src/generateFromSwagger.ts",
+        "build": "tsc",
+        "dev": "tsc --watch"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^20",
+        "@workspace/eslint-config": "workspace:*",
+        "@workspace/typescript-config": "workspace:*",
+        "cross-env": "^7.0.3",
+        "swagger-typescript-api": "^13.0.28",
+        "tsx": "^4.7.1",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "axios": "^1.6.7"
+    }
+}
