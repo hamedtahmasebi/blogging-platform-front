@@ -14,6 +14,8 @@ import {
 import { Input } from "@workspace/ui/components/input";
 import { Button } from "@workspace/ui/components/button";
 import { ContinueWithOptions } from "./ContinueWithOptions";
+import { Separator } from "@workspace/ui/components/separator";
+import Link from "next/link";
 
 const loginSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
@@ -24,10 +26,10 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm({
     isLoading = false,
-    onSubmit,
+    formAction,
 }: {
     isLoading?: boolean;
-    onSubmit: (values: LoginFormValues) => void;
+    formAction: (v: FormData) => void;
 }) {
     const form = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
@@ -47,10 +49,7 @@ export default function LoginForm({
                 <h2 className="text-4xl font-semibold tracking-tight">Login</h2>
             </div>
             <Form {...form}>
-                <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-4"
-                >
+                <form action={formAction} className="space-y-4">
                     <FormField
                         control={form.control}
                         name="email"
@@ -93,6 +92,16 @@ export default function LoginForm({
                         Sign In
                     </Button>
                     <ContinueWithOptions onGuestLogin={handleGuestLogin} />
+                    <Separator />
+                    <div className="text-center text-sm">
+                        <span>Don{"'"}t have an account? </span>
+                        <Link
+                            href={"/auth/signup"}
+                            className="text-blue-400 font-semibold"
+                        >
+                            Signup
+                        </Link>
+                    </div>
                 </form>
             </Form>
         </div>

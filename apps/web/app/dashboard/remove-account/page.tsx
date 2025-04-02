@@ -1,28 +1,9 @@
 "use client";
-import { api } from "@/lib/api";
-import { Button } from "@workspace/ui/components/button";
-import { Input } from "@workspace/ui/components/input";
+import ConfirmRemoveAccountForm from "@/components/auth/ConfirmRemoveAccountForm";
 import { AlertTriangle } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import removeAccountAction from "./action";
 
 export default function RemoveAccount() {
-    const router = useRouter();
-    const [confirmInput, setConfirmInput] = useState("");
-    const [isPending, setIsPending] = useState(false);
-
-    const handleRemoveAccount = async () => {
-        setIsPending(true);
-        try {
-            const res = await api.account.removeUser();
-            if (res.status === 200) {
-                router.push("/auth/signup");
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        setIsPending(false);
-    };
     return (
         <div>
             <h2 className="text-2xl font-bold">Remove Account</h2>
@@ -44,21 +25,7 @@ export default function RemoveAccount() {
             </p>
 
             <div className="flex flex-col gap-2 w-full md:w-fit mt-4">
-                <Input
-                    value={confirmInput}
-                    onChange={(e) => setConfirmInput(e.target.value)}
-                />
-                <Button
-                    size={"lg"}
-                    variant={"destructive"}
-                    isLoading={isPending}
-                    disabled={
-                        confirmInput?.toLowerCase() !== "confirm" || isPending
-                    }
-                    onClick={handleRemoveAccount}
-                >
-                    Remove
-                </Button>
+                <ConfirmRemoveAccountForm onSubmit={removeAccountAction} />
             </div>
         </div>
     );
