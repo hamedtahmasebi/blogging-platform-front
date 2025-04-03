@@ -1,8 +1,8 @@
 "use server";
 
-import { signIn } from "@/auth";
 import { createServerApiClient } from "@/lib/api";
-import { AuthError } from "next-auth";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 export default async function signupAction(
@@ -20,21 +20,9 @@ export default async function signupAction(
 
     const { email, password } = parsedData.data;
 
-    console.log("Signup Action", email, password);
     const api = await createServerApiClient();
     const res = await api.auth.register({ email, password });
-    try {
-        await signIn("credentials");
-    } catch (error) {
-        console.log(error);
-        if (error instanceof AuthError) {
-            switch (error.type) {
-                case "CredentialsSignin":
-                    return "Invalid credentials.";
-                default:
-                    return "Something went wrong.";
-            }
-        }
-        throw error;
-    }
+    const cookiesStorage = await cookies();
+    cookiesStorage.set("access_token", res.data.access_token);
+    redirect("/dashboard");
 }

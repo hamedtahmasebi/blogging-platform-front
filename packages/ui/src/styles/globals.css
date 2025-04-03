@@ -5,6 +5,10 @@
 
 @import "tw-animate-css";
 
+ul, ol, li {
+  list-style-type: none;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

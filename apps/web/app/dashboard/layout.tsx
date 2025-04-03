@@ -19,14 +19,11 @@ import {
     SidebarProvider,
 } from "@workspace/ui/components/sidebar";
 import { RxAvatar } from "react-icons/rx";
-import { auth } from "@/auth";
 export default async function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const session = await auth();
-    console.log("Session Data", session);
     async function fetchData() {
         "use server";
         const api = await createServerApiClient();
@@ -58,7 +55,7 @@ export default async function DashboardLayout({
                     <SidebarFooter>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="default" size="icon">
+                                <Button variant="outline">
                                     <RxAvatar />
                                     {currentUser?.data.email}
                                 </Button>

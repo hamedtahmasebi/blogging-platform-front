@@ -2,8 +2,12 @@
 
 import { createServerApiClient } from "@/lib/api";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default async function loginAction(formData: FormData) {
+export default async function loginAction(
+    prevState: void | string,
+    formData: FormData
+) {
     console.log("Calling Login Action", { ...formData });
     const email = formData.get("email")?.toString();
     const password = formData.get("password")?.toString();
@@ -14,4 +18,5 @@ export default async function loginAction(formData: FormData) {
     console.log(res.data);
     const cookieStore = await cookies();
     cookieStore.set("access_token", res.data.access_token, { httpOnly: true });
+    redirect("/dashboard");
 }

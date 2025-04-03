@@ -2,11 +2,11 @@
 
 import LoginForm from "@/components/auth/LoginForm";
 import { useActionState } from "react";
-import { authenticate } from "@/lib/actions/authenticate";
+import loginAction from "./action";
 
 export default function LoginPage() {
     const [errorMsg, formAction, isPending] = useActionState(
-        authenticate,
+        loginAction,
         undefined
     );
 
