@@ -31,7 +31,7 @@ export default async function DashboardLayout({
             const currentUser = await api.account.currentUser();
             return currentUser;
         } catch (error) {
-            console.log(error);
+            if (error) console.log(error.request, error.response.data.detail);
         }
     }
 
