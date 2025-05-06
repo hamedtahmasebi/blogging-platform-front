@@ -47,9 +47,11 @@ export default async function DashboardLayout({
                 <Sidebar>
                     <SidebarContent>
                         <SidebarMenuItem>
-                            <SidebarMenuButton>
-                                <Pencil /> Write
-                            </SidebarMenuButton>
+                            <Link href={"/dashboard/posts/create"}>
+                                <SidebarMenuButton>
+                                    <Pencil /> Write
+                                </SidebarMenuButton>
+                            </Link>
                         </SidebarMenuItem>
                     </SidebarContent>
                     <SidebarFooter>
