@@ -6,19 +6,25 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 export default async function signupAction(
-    prevState: string | undefined,
+    prevState: string | void,
     formData: FormData
 ) {
+    console.log("Calling signup Action", formData);
     const parsedData = z
         .object({
             email: z.string().email(),
             password: z.string().min(8),
         })
-        .safeParse(formData);
+        .safeParse({
+            email: formData.get("email"),
+            password: formData.get("password"),
+        });
 
     if (!parsedData.success) throw parsedData.error.message;
 
     const { email, password } = parsedData.data;
+
+    console.log(email, password);
 
     const api = await createServerApiClient();
     const res = await api.auth.register({ email, password });
